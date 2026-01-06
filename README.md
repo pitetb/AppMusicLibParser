@@ -3,87 +3,87 @@
 [![.NET](https://img.shields.io/badge/.NET-8.0-blue)](https://dotnet.microsoft.com/download/dotnet/8.0)
 [![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0)
 
-> 🇬🇧 **English version**: [README_EN.md](README_EN.md)
+> 🇫🇷 **Version française** : [README.md](README.md)
 
-Une bibliothèque .NET 8 et application console pour parser les fichiers Apple Music `Library.musicdb`.
+A .NET 8 library and console application to parse Apple Music `Library.musicdb` files.
 
-MusicParser extrait les métadonnées complètes des pistes, albums, artistes et playlists depuis le format binaire propriétaire d'Apple Music, incluant les statistiques de lecture, les ratings et les chemins de fichiers.
+MusicParser extracts complete metadata from tracks, albums, artists and playlists from Apple Music's proprietary binary format, including playback statistics, ratings and file paths.
 
-Pourquoi ce projet ? L'application AppleMusic n'exporte plus automatiquement la librairie en XML ce qui ne permet plus de developper facilement des applications exploitant la librairie musicale. Les AppleScripts étant trop lent pour les grosses librairies, il fallait une autre solution...
+Why this project? The Apple Music application no longer automatically exports the library to XML, making it difficult to develop applications that leverage the music library. AppleScripts being too slow for large libraries, another solution was needed...
 
-## ✨ Fonctionnalités
+## ✨ Features
 
-- 🎵 **Parsing complet** : Pistes, albums, artistes, playlists
-- 📊 **Statistiques de lecture** : Nombre de lectures, date de dernière écoute
-- ⭐ **Ratings** : Récupération des notes (1-5 étoiles)
-- 🔗 **Relations** : Albums → Artistes, Pistes → Albums/Artistes
-- 📁 **Chemins de fichiers** : Extraction des URLs décodées
-- 🔐 **Déchiffrement AES-128 ECB** : Support natif du format chiffré
-- 📦 **Décompression zlib** : Extraction automatique des données compressées
-- 🎨 **CLI riche** : Interface console colorée avec [Spectre.Console](https://spectreconsole.net/)
+- 🎵 **Complete parsing**: Tracks, albums, artists, playlists
+- 📊 **Playback statistics**: Play count, last played date
+- ⭐ **Ratings**: Extract star ratings (1-5 stars)
+- 🔗 **Relationships**: Albums → Artists, Tracks → Albums/Artists
+- 📁 **File paths**: Decoded URL extraction
+- 🔐 **AES-128 ECB decryption**: Native support for encrypted format
+- 📦 **zlib decompression**: Automatic extraction of compressed data
+- 🎨 **Rich CLI**: Colorful console interface with [Spectre.Console](https://spectreconsole.net/)
 
 ## 🏗️ Architecture
 
-Le projet suit une architecture en couches avec séparation entre logique métier et interface :
+The project follows a layered architecture with separation between business logic and interface:
 
-### MusicParser (Bibliothèque)
-Bibliothèque réutilisable contenant toute la logique de parsing :
+### MusicParser (Library)
+Reusable library containing all parsing logic:
 
 ```
 MusicParser/
-├── Models/              # Modèles de données
+├── Models/              # Data models
 │   ├── MusicTrack.cs
 │   ├── Album.cs
 │   ├── Artist.cs
 │   ├── Playlist.cs
 │   └── MusicLibrary.cs
 ├── Parsers/
-│   └── MusicDbParser.cs # Parser principal du format binaire
+│   └── MusicDbParser.cs # Main binary format parser
 ├── Crypto/
-│   └── MusicDbDecryptor.cs # Déchiffrement AES-128 ECB + zlib
+│   └── MusicDbDecryptor.cs # AES-128 ECB decryption + zlib
 ├── Services/
 │   ├── IMusicLibraryService.cs
 │   └── MusicLibraryService.cs
 └── ServiceCollectionExtensions.cs
 ```
 
-**Dépendances :**
+**Dependencies:**
 - `Microsoft.Extensions.DependencyInjection.Abstractions` 10.0.1
 - `Microsoft.Extensions.Logging.Abstractions` 10.0.1
-- `SharpZipLib` 1.4.2 (décompression zlib)
+- `SharpZipLib` 1.4.2 (zlib decompression)
 
-### MusicParser.App (Application Console)
-Application CLI professionnelle avec commandes interactives :
+### MusicParser.App (Console Application)
+Professional CLI application with interactive commands:
 
 ```
 MusicParser.App/
 ├── Commands/
-│   ├── InfoCommand.cs         # Informations générales de la bibliothèque
-│   ├── StatsCommand.cs        # Statistiques détaillées avec top pistes
-│   ├── RatingsCommand.cs      # Distribution des ratings (étoiles)
-│   ├── LikesCommand.cs        # Statistiques j'aime/j'aime pas
-│   ├── SearchCommand.cs       # Recherche de pistes par titre
-│   ├── CompareCommand.cs      # Comparaison byte-à-byte de fichiers
-│   └── DumpOffsetCommand.cs   # Dump hexadécimal à un offset (debug)
+│   ├── InfoCommand.cs         # Library general information
+│   ├── StatsCommand.cs        # Detailed statistics with top tracks
+│   ├── RatingsCommand.cs      # Ratings distribution (stars)
+│   ├── LikesCommand.cs        # Like/dislike statistics
+│   ├── SearchCommand.cs       # Track search by title
+│   ├── CompareCommand.cs      # Byte-by-byte file comparison
+│   └── DumpOffsetCommand.cs   # Hexadecimal dump at offset (debug)
 ├── Infrastructure/
 │   ├── TypeRegistrar.cs
 │   └── TypeResolver.cs
 └── Program.cs
 ```
 
-**Dépendances :**
+**Dependencies:**
 - `Spectre.Console.Cli` 0.53.1
 - `Serilog` 4.3.0 + extensions
 - `dotenv.net` 4.0.0
 
 ## 🚀 Installation
 
-### Prérequis
+### Prerequisites
 
 - [.NET 8.0 SDK](https://dotnet.microsoft.com/download/dotnet/8.0)
-- **Clé de déchiffrement AES** : elle n'est pas fournie avec le code pour des raisons légales. Elle peut se retrouver sur internet en cherchant un peu...
+- **AES decryption key**: Not provided with the code for legal reasons. It can be found on the internet with some research...
 
-### Compilation
+### Build
 
 ```bash
 cd MusicParser
@@ -92,46 +92,46 @@ dotnet build
 
 ### Configuration
 
-1. Copiez le fichier `.env.example` vers `.env` :
+1. Copy the `.env.example` file to `.env`:
    ```bash
    cp .env.example .env
    ```
 
-2. Éditez `.env` et ajoutez la clé AES de déchiffrement de 16 caractères :
+2. Edit `.env` and add the 16-character AES decryption key:
    ```env
    MUSICDB_AES_KEY=ABCDEFGHUILDFK
    ```
    
-   > **Note** : La clé par est utilisée par Apple Music pour chiffrer les fichiers `Library.musicdb`.
+   > **Note**: This key is used by Apple Music to encrypt `Library.musicdb` files.
 
-## 📖 Utilisation
+## 📖 Usage
 
-### Application Console
+### Console Application
 
-#### Commande `info`
-Affiche les informations générales de la bibliothèque :
+#### `info` Command
+Display general library information:
 
 ```bash
 dotnet run --project MusicParser.App -- info
 dotnet run --project MusicParser.App -- info /path/to/Library.musicdb
 ```
 
-**Exemple de sortie :**
+**Example output:**
 ```
-╭─📚 Bibliothèque Apple Music──────────────────╮
-│ Fichier: Library.musicdb                     │
-│ Taille: 7,113,718 octets (6.78 MB)           │
-│ Dernière modification: 2026-01-04 11:30:50   │
-│                                              │
-│ 📀 Pistes: 13,162                            │
-│ 💿 Albums: 1,017                             │
-│ 🎤 Artistes: 649                             │
-│ 📋 Playlists: 41                             │
-╰──────────────────────────────────────────────╯
+╭─📚 Apple Music Library────────────────────────╮
+│ File: Library.musicdb                         │
+│ Size: 7,113,718 bytes (6.78 MB)               │
+│ Last modified: 2026-01-04 11:30:50            │
+│                                               │
+│ 📀 Tracks: 13,162                             │
+│ 💿 Albums: 1,017                              │
+│ 🎤 Artists: 649                               │
+│ 📋 Playlists: 41                              │
+╰───────────────────────────────────────────────╯
 ```
 
-#### Commande `stats`
-Affiche les statistiques détaillées avec les pistes les plus écoutées :
+#### `stats` Command
+Display detailed statistics with most played tracks:
 
 ```bash
 dotnet run --project MusicParser.App -- stats
@@ -139,50 +139,50 @@ dotnet run --project MusicParser.App -- stats --top 10
 dotnet run --project MusicParser.App -- stats /path/to/Library.musicdb --top 20
 ```
 
-**Options :**
-- `--top <COUNT>` : Nombre de pistes les plus écoutées à afficher (défaut: 5)
+**Options:**
+- `--top <COUNT>`: Number of most played tracks to display (default: 5)
 
-**Exemple de sortie :**
+**Example output:**
 ```
 ╭───────────────────────┬────────╮
-│ Catégorie             │ Valeur │
+│ Category              │ Value  │
 ├───────────────────────┼────────┤
-│ Pistes totales        │ 13,162 │
+│ Total tracks          │ 13,162 │
 │ Albums                │  1,017 │
-│ Artistes              │    649 │
+│ Artists               │    649 │
 │ Playlists             │     41 │
 │                       │        │
-│ Pistes avec lecture   │  8,234 │
-│ Lectures totales      │ 45,678 │
-│ Moyenne lectures/piste│    5.5 │
+│ Tracks with plays     │  8,234 │
+│ Total plays           │ 45,678 │
+│ Average plays/track   │    5.5 │
 ╰───────────────────────┴────────╯
 
-🎵 Top 5 pistes les plus écoutées
+🎵 Top 5 most played tracks
 ╭───┬────────────────────┬─────────────┬─────────╮
-│ # │ Titre              │ Artiste     │ Lectures│
+│ # │ Title              │ Artist      │ Plays   │
 ├───┼────────────────────┼─────────────┼─────────┤
 │ 1 │ Song Title         │ Artist Name │     123 │
 │ ...│                    │             │         │
 ╰───┴────────────────────┴─────────────┴─────────╯
 ```
 
-#### Commande `ratings`
-Affiche la distribution des ratings et des exemples de pistes par niveau d'étoiles :
+#### `ratings` Command
+Display ratings distribution and track examples by star level:
 
 ```bash
 dotnet run --project MusicParser.App -- ratings
 dotnet run --project MusicParser.App -- ratings --count 20
 ```
 
-**Options :**
-- `--count <COUNT>` : Nombre de pistes à afficher par niveau d'étoiles (défaut: 10)
+**Options:**
+- `--count <COUNT>`: Number of tracks to display per star level (default: 10)
 
-**Exemple de sortie :**
+**Example output:**
 ```
-⭐ Distribution des ratings
+⭐ Ratings distribution
 
 ╭───────────────┬────────┬─────────────┬──────────╮
-│ Rating        │ Pistes │ Pourcentage │ Barre    │
+│ Rating        │ Tracks │ Percentage  │ Bar      │
 ├───────────────┼────────┼─────────────┼──────────┤
 │ ⭐⭐⭐⭐⭐   │  1,234 │      15.2%  │ ████████ │
 │ ⭐⭐⭐⭐     │  2,456 │      30.3%  │ ████████ │
@@ -191,74 +191,74 @@ dotnet run --project MusicParser.App -- ratings --count 20
 │ ⭐           │    312 │       3.8%  │ █        │
 ╰───────────────┴────────┴─────────────┴──────────╯
 
-⭐⭐⭐⭐⭐ Exemples (10/1,234)
+⭐⭐⭐⭐⭐ Examples (10/1,234)
 ╭───┬─────────────────┬───────────────┬──────────╮
-│ # │ Titre           │ Artiste       │ Album    │
+│ # │ Title           │ Artist        │ Album    │
 ├───┼─────────────────┼───────────────┼──────────┤
 │ 1 │ Great Song      │ Awesome Band  │ Album X  │
 │ ...│                 │               │          │
 ╰───┴─────────────────┴───────────────┴──────────╯
 ```
 
-#### Commande `likes`
-Affiche les statistiques des j'aime/j'aime pas avec distinction entre les différents états :
+#### `likes` Command
+Display like/dislike statistics with distinction between different states:
 
 ```bash
 dotnet run --project MusicParser.App -- likes
 dotnet run --project MusicParser.App -- likes --examples 20
 ```
 
-**Options :**
-- `--examples <COUNT>` : Nombre d'exemples de pistes à afficher par catégorie (défaut: 10)
+**Options:**
+- `--examples <COUNT>`: Number of track examples to display per category (default: 10)
 
-**États supportés :**
-- ❤️ **J'aime** (valeur 2) : Pistes marquées comme aimées
-- 💔 **Je n'aime plus** (valeur 1) : État transitoire après retrait d'un like
-- 👎 **J'aime pas explicite** (valeur 3) : Dislike actif
-- ⚪ **Neutre** (valeur 0) : Par défaut, pas d'avis
+**Supported states:**
+- ❤️ **Liked** (value 2): Tracks marked as liked
+- 💔 **Unliked** (value 1): Transitional state after removing a like
+- 👎 **Explicitly disliked** (value 3): Active dislike
+- ⚪ **Neutral** (value 0): Default, no opinion
 
-#### Commande `search`
-Recherche une piste par titre et affiche ses métadonnées complètes :
+#### `search` Command
+Search for a track by title and display complete metadata:
 
 ```bash
-dotnet run --project MusicParser.App -- search "nom de la piste"
-dotnet run --project MusicParser.App -- search /path/to/Library.musicdb "nom de la piste"
+dotnet run --project MusicParser.App -- search "track name"
+dotnet run --project MusicParser.App -- search /path/to/Library.musicdb "track name"
 ```
 
-**Affichage :**
-- Métadonnées complètes (ID, titre, artiste, album)
-- Rating avec affichage d'étoiles
-- LikeStatus avec emoji et valeur numérique
-- Statistiques de lecture
-- Chemin du fichier audio
+**Display:**
+- Complete metadata (ID, title, artist, album)
+- Rating with star display
+- LikeStatus with emoji and numeric value
+- Playback statistics
+- Audio file path
 
-#### Commande `compare`
-Compare deux fichiers MusicDB déchiffrés byte par byte, utile pour analyser les différences de format :
+#### `compare` Command
+Compare two decrypted MusicDB files byte by byte, useful for analyzing format differences:
 
 ```bash
 dotnet run --project MusicParser.App -- compare file1.musicdb file2.musicdb
 ```
 
-**Utilisation :**
-- Analyse les différences entre deux versions d'une bibliothèque
-- Affiche les offsets où les bytes diffèrent
-- Montre le contexte autour des différences
-- Utile pour le reverse engineering du format
+**Usage:**
+- Analyze differences between two library versions
+- Display offsets where bytes differ
+- Show context around differences
+- Useful for reverse engineering the format
 
-#### Commande `dump-offset`
-Dump le contenu déchiffré à un offset spécifique (outil de debug) :
+#### `dump-offset` Command
+Dump decrypted content at a specific offset (debug tool):
 
 ```bash
 dotnet run --project MusicParser.App -- dump-offset /path/to/Library.musicdb 0x2214
 ```
 
-**Utilisation :**
-- Affiche un contexte de 128 bytes autour de l'offset spécifié
-- Format hexadécimal + ASCII
-- Met en évidence le byte exact à l'offset donné
-- Essentiel pour débugger le parsing et analyser le format binaire
+**Usage:**
+- Display 128 bytes context around the specified offset
+- Hexadecimal + ASCII format
+- Highlight the exact byte at the offset
+- Essential for debugging parsing and analyzing binary format
 
-### Utilisation de la bibliothèque dans votre code
+### Using the Library in Your Code
 
 ```csharp
 using Microsoft.Extensions.DependencyInjection;
@@ -266,7 +266,7 @@ using Microsoft.Extensions.Hosting;
 using MusicParser;
 using MusicParser.Services;
 
-// Configuration avec DI
+// Configuration with DI
 var host = Host.CreateDefaultBuilder()
     .ConfigureServices((context, services) =>
     {
@@ -274,21 +274,21 @@ var host = Host.CreateDefaultBuilder()
     })
     .Build();
 
-// Utilisation du service
+// Using the service
 var musicService = host.Services.GetRequiredService<IMusicLibraryService>();
 var library = musicService.ParseLibrary("/path/to/Library.musicdb");
 
-// Accès aux données
-Console.WriteLine($"Pistes: {library.Tracks.Count}");
+// Accessing data
+Console.WriteLine($"Tracks: {library.Tracks.Count}");
 Console.WriteLine($"Albums: {library.Albums.Count}");
-Console.WriteLine($"Artistes: {library.Artists.Count}");
+Console.WriteLine($"Artists: {library.Artists.Count}");
 
-// Filtrer les pistes par artiste
+// Filter tracks by artist
 var beatlesTracks = library.Tracks
     .Where(t => t.Artist?.Contains("Beatles", StringComparison.OrdinalIgnoreCase) == true)
     .ToList();
 
-// Trouver les pistes les plus écoutées
+// Find most played tracks
 var topTracks = library.Tracks
     .Where(t => t.PlayCount.HasValue)
     .OrderByDescending(t => t.PlayCount)
@@ -296,44 +296,44 @@ var topTracks = library.Tracks
     .ToList();
 ```
 
-## 📄 Format MusicDB
+## 📄 MusicDB Format
 
-Le format du fichier `Library.musicdb` est un format binaire propriétaire utilisé par Apple Music (anciennement iTunes). Il est composé de :
+The `Library.musicdb` file format is a proprietary binary format used by Apple Music (formerly iTunes). It consists of:
 
-1. **Header non chiffré** (hfma) contenant les métadonnées
-2. **Payload chiffré** avec AES-128 ECB
-3. **Données compressées** avec zlib
+1. **Unencrypted header** (hfma) containing metadata
+2. **Encrypted payload** with AES-128 ECB
+3. **Compressed data** with zlib
 
-Le format est partiellement documenté :
-- [Documentation principale](https://www.home.vollink.com/gary/playlister/musicdb.html)
-- [Code PERL de référence](https://gitlab.home.vollink.com/external/musicdb-poc)
-- [Parser iTunes ITL](https://github.com/jeanthom/libitlp)
+The format is partially documented:
+- [Main documentation](https://www.home.vollink.com/gary/playlister/musicdb.html)
+- [PERL reference code](https://gitlab.home.vollink.com/external/musicdb-poc)
+- [iTunes ITL parser](https://github.com/jeanthom/libitlp)
 
-Des documentations détaillées sont disponibles dans le dossier [`docs/`](docs/) :
-- [MUSICDB_FORMAT_FR.md](docs/MUSICDB_FORMAT_FR.md) - Documentation en français
-- [MUSICDB_FORMAT_EN.md](docs/MUSICDB_FORMAT_EN.md) - Documentation en anglais
+Detailed documentation is available in the [`docs/`](docs/) folder:
+- [MUSICDB_FORMAT_FR.md](docs/MUSICDB_FORMAT_FR.md) - French documentation
+- [MUSICDB_FORMAT_EN.md](docs/MUSICDB_FORMAT_EN.md) - English documentation
 
-### Sections parsées
+### Parsed Sections
 
-Le parser supporte les sections suivantes :
+The parser supports the following sections:
 
-- **ltma** : Pistes (itma)
-  - Métadonnées : titre, artiste, album, durée, genre, année...
-  - Statistiques : play count, last played, date added...
-  - Ratings : notes sur 5 étoiles
-  - Références : liens vers album/artiste
+- **ltma**: Tracks (itma)
+  - Metadata: title, artist, album, duration, genre, year...
+  - Statistics: play count, last played, date added...
+  - Ratings: star ratings
+  - References: links to album/artist
   
-- **ltka** : Albums (itka)
-  - Titre, artiste(s), nombre de pistes
-  - Références vers artistes
+- **ltka**: Albums (itka)
+  - Title, artist(s), number of tracks
+  - Artist references
   
-- **ltra** : Artistes (itra)
-  - Nom de l'artiste
+- **ltra**: Artists (itra)
+  - Artist name
   
-- **ltpa** : Playlists (itpa)
-  - Nom, type (normale/smart/folder)
-  - Hiérarchie parent/enfant
-  - Liste des pistes
+- **ltpa**: Playlists (itpa)
+  - Name, type (normal/smart/folder)
+  - Parent/child hierarchy
+  - Track list
 
 ## 🧪 Tests
 
@@ -341,67 +341,66 @@ Le parser supporte les sections suivantes :
 dotnet test
 ```
 
-## 🔍 Localisation du fichier Library.musicdb
+## 🔍 Locating the Library.musicdb File
 
-Le fichier `Library.musicdb` se trouve généralement à :
+The `Library.musicdb` file is typically located at:
 
-- **macOS** : `~/Music/Music/Music Library.musiclibrary/Library.musicdb`
-- **Windows** : `%USERPROFILE%\Music\iTunes\iTunes Library.musiclibrary\Library.musicdb`
+- **macOS**: `~/Music/Music/Music Library.musiclibrary/Library.musicdb`
+- **Windows**: `%USERPROFILE%\Music\iTunes\iTunes Library.musiclibrary\Library.musicdb`
 
-> **Note** : Le chemin exact peut varier selon votre configuration et version d'Apple Music.
+> **Note**: The exact path may vary depending on your configuration and Apple Music version.
 
-## 🛠️ Développement
+## 🛠️ Development
 
-### Structure du projet
+### Project Structure
 
 ```
 MusicParser/
 ├── .github/
 │   └── copilot-instructions.md
-├── docs/                       # Documentation du format
-├── libraries-music-samples/    # Fichiers de test
-├── MusicParser/                # Bibliothèque principale
-├── MusicParser.App/            # Application console
-├── MusicParser.Tests/          # Tests unitaires (à venir)
-├── .env.example                # Template de configuration
+├── docs/                       # Format documentation
+├── libraries-music-samples/    # Test files
+├── MusicParser/                # Main library
+├── MusicParser.App/            # Console application
+├── MusicParser.Tests/          # Unit tests (coming soon)
+├── .env.example                # Configuration template
 ├── .gitignore
-├── LICENSE                     # Licence GPLv3
-├── README.md                   # Documentation (Français)
-└── README_EN.md                # Documentation (English)
+├── LICENSE                     # GPLv3 License
+└── README.md
 ```
 
-### Contribuer
+### Contributing
 
-Les contributions sont les bienvenues ! N'hésitez pas à :
-1. Fork le projet
-2. Créer une branche (`git checkout -b feature/amazing-feature`)
-3. Commit vos changements (`git commit -m 'Add amazing feature'`)
-4. Push vers la branche (`git push origin feature/amazing-feature`)
-5. Ouvrir une Pull Request
+Contributions are welcome! Feel free to:
+1. Fork the project
+2. Create a branch (`git checkout -b feature/amazing-feature`)
+3. Commit your changes (`git commit -m 'Add amazing feature'`)
+4. Push to the branch (`git push origin feature/amazing-feature`)
+5. Open a Pull Request
 
 ## 📝 Logging
 
-La bibliothèque utilise `ILogger<T>` de `Microsoft.Extensions.Logging` pour un logging flexible.
+The library uses `ILogger<T>` from `Microsoft.Extensions.Logging` for flexible logging.
 
-Tous les logs internes (parsing, déchiffrement) sont au niveau `Debug` pour une sortie console propre.
+All internal logs (parsing, decryption) are at `Debug` level for clean console output.
 
-L'application console utilise Serilog avec configuration par défaut au niveau `Information`.
+The console application uses Serilog with default configuration at `Information` level.
 
-## ⚠️ Limitations connues
+## ⚠️ Known Limitations
 
-- Le parsing est read-only (pas d'écriture dans Library.musicdb)
-- Certains champs binaires ne sont pas encore décodés
-- Les playlists smart (requêtes) ne sont pas interprétées
-- Testé principalement sur macOS avec Apple Music (versions récentes)
+- Parsing is read-only (no writing to Library.musicdb)
+- Some binary fields are not yet decoded
+- Smart playlists (queries) are not interpreted
+- Mainly tested on macOS with Apple Music (recent versions)
 
-## 🙏 Crédits
+## 🙏 Credits
 
-- **Documentation du format** : [Gary Vollink](https://www.home.vollink.com/gary/playlister/musicdb.html)
-- **Référence iTunes ITL** : [jeanthom/libitlp](https://github.com/jeanthom/libitlp)
+- **Format documentation**: [Gary Vollink](https://www.home.vollink.com/gary/playlister/musicdb.html)
+- **iTunes ITL reference**: [jeanthom/libitlp](https://github.com/jeanthom/libitlp)
 
-## 📜 Licence
+## 📜 License
 
-Ce projet est sous licence GNU General Public License v3.0 - voir le fichier [LICENSE](LICENSE) pour plus de détails.
+This project is licensed under the GNU General Public License v3.0 - see the [LICENSE](LICENSE) file for details.
 
 ```
 Copyright (C) 2026 MusicParser Contributors
@@ -417,9 +416,9 @@ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 GNU General Public License for more details.
 ```
 
-## 🔗 Liens utiles
+## 🔗 Useful Links
 
-- [Documentation .NET 8](https://learn.microsoft.com/en-us/dotnet/core/whats-new/dotnet-8)
+- [.NET 8 Documentation](https://learn.microsoft.com/en-us/dotnet/core/whats-new/dotnet-8)
 - [Spectre.Console](https://spectreconsole.net/)
 - [SharpZipLib](https://github.com/icsharpcode/SharpZipLib)
 
